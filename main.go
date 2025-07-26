@@ -56,6 +56,11 @@ func main() {
 		proxyRequest(w, client, string(token), "https://kubernetes.default.svc/.well-known/openid-configuration")
 	})
 
+	// Health check endpoint
+	http.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	})
+
 	log.Println("Listening on :8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
