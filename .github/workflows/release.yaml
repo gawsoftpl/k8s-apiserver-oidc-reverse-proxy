@@ -43,17 +43,11 @@ jobs:
     name: Package & Push Helm Chart to GHCR
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
-      - name: Publish Helm chart
+      - uses: actions/checkout@v2
+      - name: Publish Helm charts
         uses: stefanprodan/helm-gh-pages@master
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          charts_dir: k8s-jwks-proxy
-          charts_url: https://gawsoftpl.github.io/k8s-jwks-proxy
-          owner: gawsoftpl
-          repository: k8s-jwks-proxy
-          branch: gh-pages
-          target_dir: .
 
   release:
     name: Create GitHub Release
