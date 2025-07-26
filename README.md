@@ -13,6 +13,7 @@ helm repo add k8s-jwks-proxy https://gawsoft.pl.github.io/k8s-jwks-proxy
 helm repo update
 ```
 
+Run docker container
 ```sh
 docker run -it --rm ghcr.io/gawsoftpl/k8s-jwks-proxy:latest
 ```
@@ -44,12 +45,6 @@ No extra configuration is needed.
 go build -o jwks-proxy main.go
 ```
 
-Or use the provided Dockerfile:
-
-```bash
-docker build -t your-registry/jwks-proxy:latest .
-```
-
 ---
 
 ## 🚀 Running in Kubernetes
@@ -58,62 +53,6 @@ docker build -t your-registry/jwks-proxy:latest .
 
    * `/openid/v1/jwks`
    * `/.well-known/openid-configuration`
-
-2. **Example Deployment:**
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: jwks-proxy
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: jwks-proxy
-  template:
-    metadata:
-      labels:
-        app: jwks-proxy
-    spec:
-      serviceAccountName: jwks-proxy
-      containers:
-      - name: proxy
-        image: your-registry/jwks-proxy:latest
-        ports:
-        - containerPort: 8080
-```
-
-3. **Ingress Example:**
-
-```yaml
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: jwks-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-spec:
-  ingressClassName: nginx
-  rules:
-  - host: jwks.example.com
-    http:
-      paths:
-      - path: /openid/v1/jwks
-        pathType: Prefix
-        backend:
-          service:
-            name: jwks-proxy
-            port:
-              number: 8080
-      - path: /.well-known/openid-configuration
-        pathType: Prefix
-        backend:
-          service:
-            name: jwks-proxy
-            port:
-              number: 8080
-```
 
 ---
 
