@@ -41,38 +41,19 @@ jobs:
 
   helm:
     name: Package & Push Helm Chart to GHCR
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write  # to push to gh-pages branch
-
+    runs-on: ubuntu-22.04
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0  # fetch all history for tags if needed
-
-    - name: Set up Helm
-      uses: azure/setup-helm@v4
-      with:
-        version: v3.14.0
-
-    - name: Package Helm chart
-      run: |
-        mkdir -p charts-packaged
-        helm package charts/k8s-jwks-proxy --destination charts-packaged
-
-    - name: Update Helm repo index
-      run: |
-        helm repo index charts-packaged --url https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
-
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v4
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./charts-packaged
-        publish_branch: gh-pages
-        # Set this if your pages are served from root:
-        # destination_dir: .
+      - uses: actions/checkout@v4
+      - name: Publish Helm chart
+        uses: stefanprodan/helm-gh-pages@master
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          charts_dir: k8s-jwks-proxy
+          charts_url: https://gawsoftpl.github.io/k8s-jwks-proxy
+          owner: gawsoftpl
+          repository: k8s-jwks-proxy
+          branch: gh-pages
+          target_dir: .
 
   release:
     name: Create GitHub Release
