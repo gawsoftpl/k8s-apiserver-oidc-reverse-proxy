@@ -1,7 +1,3 @@
-Sure! Here's a clean and concise `README.md` for your Go-based JWKS reverse proxy project:
-
----
-
 # 🔐 JWKS Reverse Proxy for Kubernetes API Server
 
 This is a lightweight reverse proxy written in Go that exposes Kubernetes API Server's OIDC discovery endpoints (`/.well-known/openid-configuration` and `/openid/v1/jwks`) **securely to the public**, **without enabling anonymous access** (`--anonymous-auth=false`).
@@ -137,8 +133,3 @@ spec:
 ## 📜 License
 
 MIT — use freely, modify responsibly.
-
----
-
-Let me know if you want me to package this into a GitHub-ready repo (`main.go`, `Dockerfile`, `manifests/`, etc.).
-
