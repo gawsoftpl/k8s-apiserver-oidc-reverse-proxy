@@ -5,6 +5,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: {{ include "k8s-jwks-proxy.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
   name: system:service-account-issuer-discovery

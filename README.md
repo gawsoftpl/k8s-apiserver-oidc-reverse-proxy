@@ -9,7 +9,7 @@ It authenticates to the Kubernetes API Server using a Service Account token and 
 
 Install helm chart
 ```sh
-helm repo add k8s-jwks-proxy https://gawsoftpl.github.io/k8s-jwks-proxy
+helm repo add k8s-jwks-proxy https://gawsoftpl.github.io/k8s-apiserver-oidc-reverse-proxy
 helm repo update
 helm install k8s-jwks-proxy k8s-jwks-proxy/k8s-jwks-proxy
 ```
