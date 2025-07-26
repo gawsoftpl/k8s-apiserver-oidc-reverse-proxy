@@ -37,7 +37,9 @@ jobs:
     - name: Build and push image
       run: |
         docker build -t $IMAGE_NAME:$TAG .
+        docker image tag $IMAGE_NAME:$TAG $IMAGE_NAME:latest
         docker push $IMAGE_NAME:$TAG
+        docker push $IMAGE_NAME:latest
 
   helm:
     name: Package & Push Helm Chart to GHCR
