@@ -1,0 +1,78 @@
+name: Release Proxy & Helm Chart
+
+on:
+  push:
+    branches: [ main ]
+    tags:
+      - 'v*'   # triggers on version tags like v1.0.0
+
+env:
+  IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/k8s-jwks-proxy
+  CHART_NAME: k8s-jwks-proxy
+
+jobs:
+
+  docker:
+    name: Build & Push Docker Image
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v4
+
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Extract tag (if available)
+      id: extract_tag
+      run: |
+        echo "TAG=${GITHUB_REF#refs/tags/}" >> "$GITHUB_ENV"
+
+    - name: Set Docker tag
+      run: |
+        echo "DOCKER_TAG=${{ env.TAG || 'latest' }}" >> $GITHUB_ENV
+
+    - name: Build and push image
+      run: |
+        docker build -t $IMAGE_NAME:$DOCKER_TAG .
+        docker push $IMAGE_NAME:$DOCKER_TAG
+
+  helm:
+    name: Package & Publish Helm Chart
+    runs-on: ubuntu-latest
+    needs: docker
+
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v4
+
+    - name: Set up Helm
+      uses: azure/setup-helm@v4
+      with:
+        version: v3.14.0
+
+    - name: Package Helm chart
+      run: |
+        helm lint ./charts/${{ env.CHART_NAME }}
+        helm package ./charts/${{ env.CHART_NAME }} --destination ./charts-packaged
+
+    - name: Update Helm repo index
+      run: |
+        helm repo index ./charts-packaged --url https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+
+    - name: Publish to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./charts-packaged
