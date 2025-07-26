@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write
+      contents: read
       packages: write
 
     steps:
@@ -41,6 +41,9 @@ jobs:
 
   helm:
     name: Package & Push Helm Chart to GHCR
+    permissions:
+      contents: write
+      packages: write
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v2
