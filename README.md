@@ -141,3 +141,4 @@ MIT — use freely, modify responsibly.
 ---
 
 Let me know if you want me to package this into a GitHub-ready repo (`main.go`, `Dockerfile`, `manifests/`, etc.).
+
