@@ -28,14 +28,14 @@ spec:
       http:
         paths:
         - path: /openid/v1/jwks
-          pathType: Prefix
+          pathType: ImplementationSpecific
           backend:
             service:
               name: {{ include "k8s-jwks-proxy.fullname" . }}
               port:
                 number: {{ .Values.service.port }}
         - path: /.well-known/openid-configuration
-          pathType: Prefix
+          pathType: ImplementationSpecific
           backend:
             service:
               name: {{ include "k8s-jwks-proxy.fullname" . }}
