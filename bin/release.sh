@@ -44,7 +44,7 @@ sed -i'' -e "s/^version: .*/version: $new_version/" "$CHART_FILE"
 sed -i'' -e "s/^appVersion: .*/appVersion: \"$new_version\"/" "$CHART_FILE"
 
 # Commit and tag
-git add "$CHART_FILE"
+git add .
 git commit -m "release: bump chart version to v$new_version"
 git tag "v$new_version"
 
