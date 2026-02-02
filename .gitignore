@@ -1,2 +1,3 @@
 bin/k8s-jwks-proxy
 .idea
+./k8s-jwks-proxy
