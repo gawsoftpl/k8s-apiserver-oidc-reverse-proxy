@@ -84,8 +84,11 @@ httpRoute:
   rules:
     - matches:
         - path:
-            type: PathPrefix
-            value: /
+            type: Exact
+            value: /openid/v1/jwks
+        - path:
+            type: Exact
+            value: /.well-known/openid-configuration
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
