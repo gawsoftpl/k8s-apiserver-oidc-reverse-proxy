@@ -69,6 +69,24 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+# Kubernetes Gateway API configuration
+# For more information checkout: https://gateway-api.sigs.k8s.io/guides/httproute/
+httpRoute:
+  enabled: true
+  # The name of the Gateway that the route attaches to
+  gatewayName: "external-gateway"
+  # The namespace where the Gateway resides (optional)
+  gatewayNamespace: "gateway-system"
+  # List of hostnames (domains) for this route
+  hostnames:
+    - chart-example.local
+  # Path matching rules (by default forwards all traffic to the service)
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
