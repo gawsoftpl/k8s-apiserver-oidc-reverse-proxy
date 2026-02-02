@@ -1,4 +1,4 @@
-APP_NAME := k8s-jwks-proxy
+APP_NAME := k8s-jwks-proxy-amd64
 
 
 .PHONY: all build clean

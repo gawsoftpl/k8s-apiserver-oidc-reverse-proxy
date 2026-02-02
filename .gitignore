@@ -1,3 +1,2 @@
-bin/k8s-jwks-proxy
+k8s-jwks-proxy-amd64
 .idea
-./k8s-jwks-proxy

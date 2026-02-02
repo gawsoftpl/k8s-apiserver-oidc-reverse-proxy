@@ -7,8 +7,8 @@ COPY go.mod ./
 RUN go mod download
 
 COPY main.go .
-RUN go build -o k8s-jwks-proxy
+RUN go build -o k8s-jwks-proxy-amd64
 
 FROM busybox
-COPY --from=builder /app/k8s-jwks-proxy /usr/local/bin/k8s-jwks-proxy
+COPY --from=builder /app/k8s-jwks-proxy-amd64 /usr/local/bin/k8s-jwks-proxy
 ENTRYPOINT ["/usr/local/bin/k8s-jwks-proxy"]
