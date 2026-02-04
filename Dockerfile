@@ -11,5 +11,7 @@ RUN go build -o k8s-jwks-proxy-amd64
 
 FROM docker.io/busybox
 COPY --from=builder /app/k8s-jwks-proxy-amd64 /usr/local/bin/k8s-jwks-proxy
+
 USER 1000
+
 ENTRYPOINT ["/usr/local/bin/k8s-jwks-proxy"]
