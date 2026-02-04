@@ -12,11 +12,15 @@ spec:
   hostnames:
     {{- toYaml .Values.httpRoute.hostnames | nindent 4 }}
   rules:
-    {{- range .Values.httpRoute.rules }}
+{{- range .Values.httpRoute.rules }}
     - matches:
-        {{- toYaml .matches | nindent 8 }}
+      {{- toYaml .matches | nindent 6 }}
       backendRefs:
+    {{- if .backendRefs }}
+      {{- toYaml .backendRefs | nindent 6 }}
+    {{- else }}
         - name: {{ include "k8s-jwks-proxy.fullname" $ }}
           port: {{ $.Values.service.port }}
     {{- end }}
+{{- end }}
 {{- end }}
