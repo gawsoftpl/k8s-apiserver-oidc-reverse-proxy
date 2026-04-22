@@ -3,9 +3,9 @@ entries:
   k8s-jwks-proxy:
   - apiVersion: v2
     appVersion: 1.0.17
-    created: "2026-02-04T01:35:37.544328071Z"
+    created: "2026-04-22T00:22:29.146372732Z"
     description: A Helm chart for Kubernetes to install proxy to k8s oidc service
-    digest: 9be3b7363de65230f9f80f869fbff2aea6e783639b2abdb2fbfea31d09418967
+    digest: 32fd8e51702c4b7e9ff3c63465f91fe32004953491470fa661ef20f160cb675a
     name: k8s-jwks-proxy
     type: application
     urls:
@@ -131,4 +131,4 @@ entries:
     urls:
     - https://gawsoftpl.github.io/k8s-apiserver-oidc-reverse-proxy/k8s-jwks-proxy-1.0.2.tgz
     version: 1.0.2
-generated: "2026-02-04T01:35:37.542826956Z"
+generated: "2026-04-22T00:22:29.145666137Z"
