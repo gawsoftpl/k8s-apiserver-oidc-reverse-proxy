@@ -50,7 +50,7 @@ sed -i'' -e "s/^version: .*/version: $new_version/" "$CHART_FILE"
 sed -i'' -e "s/^appVersion: .*/appVersion: \"$new_version\"/" "$CHART_FILE"
 
 # Update image.tag in values.yaml
-sed -i'' -e "s/^\(\s*tag:\s*\).*/\1\"$new_version\"/" "$VALUES_FILE"
+sed -i'' -e "s/^\(\s*tag:\s*\).*/\1\"v$new_version\"/" "$VALUES_FILE"
 
 # Commit and tag
 git add .
