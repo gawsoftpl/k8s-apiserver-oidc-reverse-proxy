@@ -1,3 +1,3 @@
 module github.com/gawsoftpl/k8s-jwks-proxy
 
-go 1.27.0
+go 1.27.3
