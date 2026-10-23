@@ -2,10 +2,16 @@
 set -euo pipefail
 
 CHART_FILE="charts/k8s-jwks-proxy/Chart.yaml"
+VALUES_FILE="charts/k8s-jwks-proxy/values.yaml"
 VERSION_TYPE=${1:-patch}  # default to patch if not provided
 
 if [[ ! -f "$CHART_FILE" ]]; then
   echo "❌ Chart.yaml not found at $CHART_FILE"
+  exit 1
+fi
+
+if [[ ! -f "$VALUES_FILE" ]]; then
+  echo "❌ values.yaml not found at $VALUES_FILE"
   exit 1
 fi
 
@@ -42,6 +48,9 @@ echo "➡️  New version: $new_version"
 # Update Chart.yaml
 sed -i'' -e "s/^version: .*/version: $new_version/" "$CHART_FILE"
 sed -i'' -e "s/^appVersion: .*/appVersion: \"$new_version\"/" "$CHART_FILE"
+
+# Update image.tag in values.yaml
+sed -i'' -e "s/^\(\s*tag:\s*\).*/\1\"$new_version\"/" "$VALUES_FILE"
 
 # Commit and tag
 git add .
